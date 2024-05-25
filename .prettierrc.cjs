@@ -1,0 +1,23 @@
+module.exports = {
+    arrowParens: "always",
+    bracketSpacing: true,
+    htmlWhitespaceSensitivity: "css",
+    insertPragma: false,
+    singleAttributePerLine: false,
+    bracketSameLine: false,
+    jsxBracketSameLine: false,
+    jsxSingleQuote: false,
+    printWidth: 130,
+    proseWrap: "preserve",
+    quoteProps: "as-needed",
+    requirePragma: false,
+    semi: true,
+    singleQuote: false,
+    tabWidth: 2,
+    trailingComma: "es5",
+    useTabs: false,
+    embeddedLanguageFormatting: "auto",
+    vueIndentScriptAndStyle: false,
+    filepath: "/Users/bytedance/Desktop/project/work.fe/fe/.prettier.cjs",
+    // parser: "babel", // notice 不建议选，会给老子报错
+};
