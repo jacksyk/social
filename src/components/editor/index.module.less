@@ -1,0 +1,25 @@
+.show-wrapper {
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('/dog.png') no-repeat;
+    background-size: 100% auto;
+    z-index: -1;
+    opacity: .5;
+  }
+}
+
+.show {
+  pre {
+    background-color: #f4f0ee;
+    border-radius: 8px;
+    padding: 20px 16px;
+    margin: 20px 0;
+  }
+}

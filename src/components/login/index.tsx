@@ -4,6 +4,7 @@ import { Button, Form, Input, Tag, message } from "antd";
 import styles from "./index.module.less";
 import { Kfetch, storage } from "@utils";
 import { LoginType } from "@/types";
+import { useNavigate } from "react-router";
 interface FieldType {
   username?: string;
   password?: string;
@@ -31,10 +32,12 @@ const sendCode = (email: string): Promise<any> => {
 export const Login = () => {
   const [isRegister, setIsRegister] = useState(false); // 是否在注册状态
   const [isSendCode, setIsSendCode] = useState(false);
+  const navigate = useNavigate();
   const onFinish = useCallback(
     async (values) => {
       const { password, username, email, code } = values;
-      if (!isSendCode) {
+      // 在注册的时候，发送验证码
+      if (!isSendCode && isRegister) {
         const data = await sendCode(email);
         if (data.code === 200) {
           message.success("验证码发送成功");
@@ -60,7 +63,9 @@ export const Login = () => {
           });
           if ((data as LoginType).code === 200) {
             storage.set("token", data.token);
+            storage.set("userId", data.userId);
             message.success(isRegister ? "注册成功" : "登录成功");
+            navigate("/home/content");
             return;
           }
           message.error(data.message);
@@ -70,7 +75,7 @@ export const Login = () => {
         }
       }
     },
-    [isRegister, isSendCode]
+    [isRegister, isSendCode, navigate]
   );
 
   const onFinishFailed: FormProps<FieldType>["onFinishFailed"] = useCallback(() => {

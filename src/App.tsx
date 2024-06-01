@@ -2,7 +2,8 @@
 import { useEffect } from "react";
 import styles from "./App.module.less";
 import { Navigate, useRoutes } from "react-router-dom";
-import { Login } from "@/components";
+import { Login, Home, Detail, Write, PersonalInfo } from "@/components";
+import { Content } from "@/components/home/components";
 
 const Index = () => {
   const routesList = useRoutes([
@@ -14,9 +15,30 @@ const Index = () => {
       path: "/login",
       element: <Login></Login>,
     },
+    {
+      path: "/home",
+      element: <Home></Home>,
+      children: [
+        {
+          path: "detail",
+          element: <Detail></Detail>,
+        },
+        {
+          path: "content",
+          element: <Content></Content>,
+        },
+        {
+          path: "write",
+          element: <Write></Write>,
+        },
+        {
+          path: "info",
+          element: <PersonalInfo></PersonalInfo>,
+        },
+      ],
+    },
   ]);
   useEffect(() => {}, []);
-  // const [count, setCount] = useState(0);
 
   return <>{routesList}</>;
 };
