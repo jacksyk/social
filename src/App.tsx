@@ -1,8 +1,7 @@
 // import { useState } from "react";
 import { useEffect } from "react";
-import styles from "./App.module.less";
 import { Navigate, useRoutes } from "react-router-dom";
-import { Login, Home, Detail, Write, PersonalInfo } from "@/components";
+import { Login, Home, Detail, Write, PersonalInfo, SearchList, ClassifyDetail } from "@/components";
 import { Content } from "@/components/home/components";
 
 const Index = () => {
@@ -34,6 +33,14 @@ const Index = () => {
         {
           path: "info",
           element: <PersonalInfo></PersonalInfo>,
+        },
+        {
+          path: "search",
+          element: <SearchList></SearchList>,
+        },
+        {
+          path: "classify",
+          element: <ClassifyDetail></ClassifyDetail>,
         },
       ],
     },

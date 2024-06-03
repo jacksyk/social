@@ -21,7 +21,7 @@ export const PersonalInfo = () => {
     const obj = {
       userId: Number(userId),
       name,
-      age,
+      age: Number(age),
       email,
       username,
       password,

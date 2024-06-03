@@ -45,6 +45,13 @@ const Tab = () => {
 
 export const Home = () => {
   const navigate = useNavigate();
+
+  const handleSearch = useCallback(
+    (value) => {
+      navigate(`/home/search?search=${value}`);
+    },
+    [navigate]
+  );
   return (
     <>
       <div className={styles.header}>
@@ -86,6 +93,7 @@ export const Home = () => {
               style={{
                 width: "300px",
               }}
+              onSearch={handleSearch}
             ></Search>
           </div>
         </div>

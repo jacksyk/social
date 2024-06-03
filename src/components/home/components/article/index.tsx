@@ -1,5 +1,5 @@
 import { Kfetch } from "@utils";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Card, Spin, message } from "antd";
 import styles from "./index.module.less";
 import { useNavigate } from "react-router";

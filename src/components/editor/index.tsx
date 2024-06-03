@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import styles from "./index.module.less";
-import { Button, Modal, Input, message } from "antd";
+import { Button, Modal, Input, message, Select } from "antd";
 import { Kfetch } from "@utils";
 import { storage } from "@utils";
 // import { Kfetch } from "@utils";
@@ -18,6 +18,18 @@ function MyEditor() {
   const [title, setTitle] = useState("");
   // 模态框展示与否
   const [isShowModal, setIsShowModal] = useState(false);
+  // 文章分类
+  const [classify, setClassify] = useState("");
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    Kfetch("article/classify").then((res) => {
+      if (res.code === 200) {
+        setData(res.message);
+      }
+    });
+  }, []);
 
   // todo：回显数据，数据请求之后
   useEffect(() => {
@@ -44,6 +56,7 @@ function MyEditor() {
       userId: storage.get("userId"),
       articleTitle: title,
       articleImage: "",
+      classify: Number(classify),
     };
     console.log(body);
     try {
@@ -63,7 +76,7 @@ function MyEditor() {
     } catch (err) {
       message.error("服务器错误");
     }
-  }, [html, title]);
+  }, [classify, html, title]);
 
   const handleCancel = useCallback(() => {
     setIsShowModal(false);
@@ -169,8 +182,22 @@ function MyEditor() {
             setTitle(value.target.value);
           }}
         />
+
+        <Select
+          onChange={(value) => {
+            console.log(value);
+            setClassify(value);
+          }}
+          placeholder="请输入文章的类别"
+          style={{
+            marginTop: "20px",
+          }}
+        >
+          {data.map((_item: any) => {
+            return <Select.Option value={_item.id}>{_item.classify}</Select.Option>;
+          })}
+        </Select>
       </Modal>
-      s
     </>
   );
 }
