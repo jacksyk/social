@@ -5,3 +5,4 @@ export * from "./write";
 export * from "./personal-info";
 export * from "./search-list";
 export * from "./classify-detail";
+export * from "./boil-point";

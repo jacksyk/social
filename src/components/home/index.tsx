@@ -15,7 +15,7 @@ const Tabs = [
   {
     label: "沸点",
     value: "hotspot",
-    path: "/home/content",
+    path: "/home/boiling",
   },
 ];
 
