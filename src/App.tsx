@@ -49,6 +49,7 @@ const Index = () => {
       ],
     },
   ]);
+
   useEffect(() => {}, []);
 
   return <>{routesList}</>;

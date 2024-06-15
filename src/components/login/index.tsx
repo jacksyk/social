@@ -1,10 +1,10 @@
-import React, { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import type { FormProps } from "antd";
 import { Button, Form, Input, Tag, message } from "antd";
 import styles from "./index.module.less";
 import { Kfetch, storage } from "@utils";
 import { LoginType } from "@/types";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 interface FieldType {
   username?: string;
   password?: string;
@@ -32,6 +32,8 @@ const sendCode = (email: string): Promise<any> => {
 export const Login = () => {
   const [isRegister, setIsRegister] = useState(false); // 是否在注册状态
   const [isSendCode, setIsSendCode] = useState(false);
+  const location = useLocation();
+  console.log(`%c 日志`, "background-color:#e0005a;color:#ffffff;font-weight:bold;padding:4px;", location);
   const navigate = useNavigate();
   const onFinish = useCallback(
     async (values) => {
