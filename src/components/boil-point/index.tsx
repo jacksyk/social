@@ -3,6 +3,7 @@ import { Card, Input } from "antd";
 import { Kfetch } from "@utils";
 import { storage } from "@utils";
 import "./index.module.less";
+import { useNavigate } from "react-router";
 const Search = Input.Search;
 
 const webSocket = new WebSocket("ws://106.54.20.64:8081/yk/chat");
@@ -15,6 +16,8 @@ export const BoilPoint = () => {
       timme: string;
     }>
   >([]);
+
+  const navigator = useNavigate();
 
   const [inputValue, setInputValue] = React.useState<string>("");
 
@@ -31,7 +34,7 @@ export const BoilPoint = () => {
     });
   }, []);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const message = (event) => {
       console.log(`%c 日志`, "background-color:#e0005a;color:#ffffff;font-weight:bold;padding:4px;", event.data);
       const data = JSON.parse(event.data);
@@ -39,6 +42,9 @@ export const BoilPoint = () => {
         setData((prev) => {
           return [data, ...prev];
         });
+      } else if (data.type === "login_response") {
+        window.message.error("请先修改名字");
+        navigator("/home/info");
       }
     };
 
@@ -52,7 +58,7 @@ export const BoilPoint = () => {
       webSocket.removeEventListener("message", message);
       webSocket.removeEventListener("open", open);
     };
-  }, []);
+  }, [navigator]);
 
   const onSearch = React.useCallback((value: string) => {
     webSocket.send(JSON.stringify({ type: "send_request", msg: value }));
