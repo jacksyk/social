@@ -1,14 +1,16 @@
 import "@wangeditor/editor/dist/css/style.css"; // 引入 css
 
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { Editor, Toolbar } from "@wangeditor/editor-for-react";
 import { IDomEditor, IEditorConfig, IToolbarConfig } from "@wangeditor/editor";
 import styles from "./index.module.less";
 import { Button, Modal, Input, message, Select } from "antd";
 import { Kfetch } from "@utils";
 import { storage } from "@utils";
+import { useNavigate } from "react-router";
 // import { Kfetch } from "@utils";
 function MyEditor() {
+  const navigator = useNavigate();
   // editor 实例
   const [editor, setEditor] = useState<IDomEditor | null>(); // TS 语法
   // const [editor, setEditor] = useState(null)                   // JS 语法
@@ -22,6 +24,9 @@ function MyEditor() {
   const [classify, setClassify] = useState("");
 
   const [data, setData] = useState([]);
+
+  const editorRef = useRef<HTMLDivElement | null>(null);
+  const showRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     Kfetch("article/classify").then((res) => {
@@ -70,13 +75,15 @@ function MyEditor() {
       if (response.code === 200) {
         message.success("发布成功");
         setIsShowModal(false);
+        navigator("/home/content");
+
         return;
       }
       message.error("发布失败");
     } catch (err) {
       message.error("服务器错误");
     }
-  }, [classify, html, title]);
+  }, [classify, html, navigator, title]);
 
   const handleCancel = useCallback(() => {
     setIsShowModal(false);
@@ -91,6 +98,15 @@ function MyEditor() {
     };
   }, [editor]);
 
+  React.useLayoutEffect(() => {
+    if (editorRef.current) {
+      const { height } = editorRef.current.getBoundingClientRect();
+      if (showRef.current) {
+        showRef.current.style.height = `${height}px`;
+      }
+    }
+  }, []);
+
   return (
     <>
       <div
@@ -98,7 +114,7 @@ function MyEditor() {
           display: "flex",
         }}
       >
-        <div style={{ border: "1px solid #ccc", zIndex: 100, flex: 1 }}>
+        <div style={{ border: "1px solid #ccc", zIndex: 100, flex: 1 }} ref={editorRef}>
           <Toolbar editor={editor!} defaultConfig={toolbarConfig} mode="default" style={{ borderBottom: "1px solid #ccc" }} />
           <Editor
             defaultConfig={editorConfig}
@@ -117,6 +133,7 @@ function MyEditor() {
             flexShrink: 0,
             padding: "20px",
           }}
+          ref={showRef}
           className={styles["show-wrapper"]}
         >
           <div

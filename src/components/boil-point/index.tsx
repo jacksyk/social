@@ -16,6 +16,8 @@ export const BoilPoint = () => {
     }>
   >([]);
 
+  const [inputValue, setInputValue] = React.useState<string>("");
+
   React.useEffect(() => {
     Kfetch(`user/${storage.get("userId")}`).then((res) => {
       if (res.code === 200) {
@@ -35,7 +37,7 @@ export const BoilPoint = () => {
       const data = JSON.parse(event.data);
       if (data.type === "msg") {
         setData((prev) => {
-          return [...prev, data];
+          return [data, ...prev];
         });
       }
     };
@@ -54,7 +56,51 @@ export const BoilPoint = () => {
 
   const onSearch = React.useCallback((value: string) => {
     webSocket.send(JSON.stringify({ type: "send_request", msg: value }));
+    setInputValue("");
   }, []);
+
+  const renderContent = React.useMemo(() => {
+    return (
+      <>
+        {data?.map((_user: any, _index: number) => {
+          return (
+            <div
+              style={{
+                marginTop: "20px",
+              }}
+              className="wrap"
+              key={_user.id}
+            >
+              <Card
+                title={_user.name}
+                key={_user.name + _index}
+                style={{
+                  margin: "0 10px",
+                }}
+              >
+                <p
+                  style={{
+                    fontSize: "16px",
+                    color: "red",
+                  }}
+                >
+                  {_user.msg}
+                </p>
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "rgba(0,0,0,0.45)",
+                  }}
+                >
+                  {_user.time}
+                </p>
+              </Card>
+            </div>
+          );
+        })}
+      </>
+    );
+  }, [data]);
   return (
     <Card
       title="沸点社区，尽情畅聊"
@@ -63,42 +109,16 @@ export const BoilPoint = () => {
         margin: "50px 100px",
       }}
     >
-      <Search placeholder="畅聊吧" allowClear enterButton="发送" size="large" onSearch={onSearch} />
-      {data?.reverse().map((_user: any, _index: number) => {
-        return (
-          <div
-            style={{
-              marginTop: "20px",
-            }}
-            className="wrap"
-          >
-            <Card
-              title={_user.name}
-              key={_user.name + _index}
-              style={{
-                margin: "0 10px",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: "16px",
-                  color: "red",
-                }}
-              >
-                {_user.msg}
-              </p>
-              <p
-                style={{
-                  fontSize: "12px",
-                  color: "rgba(0,0,0,0.45)",
-                }}
-              >
-                {_user.time}
-              </p>
-            </Card>
-          </div>
-        );
-      })}
+      <Search
+        placeholder="畅聊吧"
+        allowClear
+        enterButton="发送"
+        size="large"
+        onSearch={onSearch}
+        value={inputValue}
+        onChange={(value) => setInputValue(value.target.value)}
+      />
+      {renderContent}
     </Card>
   );
 };
