@@ -26,4 +26,16 @@ export default defineConfig({
   server: {
     port: 8080,
   },
+  build: {
+    minify: false,
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            return "vendor";
+          }
+        },
+      },
+    },
+  },
 });

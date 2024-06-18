@@ -37,7 +37,7 @@ export const BoilPoint = () => {
         );
       }
     });
-  }, []);
+  }, [navigator]);
 
   React.useEffect(() => {
     const message = (event) => {
