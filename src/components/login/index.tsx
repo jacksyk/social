@@ -67,6 +67,11 @@ export const Login = () => {
             storage.set("token", data.token);
             storage.set("userId", data.userId);
             message.success(isRegister ? "注册成功" : "登录成功");
+            if (isRegister) {
+              setIsRegister(false);
+              setIsSendCode(false);
+              return;
+            }
             navigate("/home/content");
             return;
           }

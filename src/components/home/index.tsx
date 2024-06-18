@@ -109,7 +109,13 @@ export const Home = () => {
       >
         <div className={styles.header}>
           <div className={styles.left}>
-            <div className={styles.logo}>
+            <div
+              className={styles.logo}
+              onClick={() => {
+                navigate("/home/content");
+                setValue("home");
+              }}
+            >
               {/* <img src={} alt="" /> */} {title}
             </div>
             <div className={styles["left-tab"]}>

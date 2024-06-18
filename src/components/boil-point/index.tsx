@@ -24,6 +24,11 @@ export const BoilPoint = () => {
   React.useEffect(() => {
     Kfetch(`user/${storage.get("userId")}`).then((res) => {
       if (res.code === 200) {
+        if (!res.message.name) {
+          window.message.error("请先修改名字");
+          navigator("/home/info");
+          return;
+        }
         webSocket.send(
           JSON.stringify({
             type: "login_request",
@@ -34,18 +39,18 @@ export const BoilPoint = () => {
     });
   }, []);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const message = (event) => {
-      console.log(`%c 日志`, "background-color:#e0005a;color:#ffffff;font-weight:bold;padding:4px;", event.data);
       const data = JSON.parse(event.data);
       if (data.type === "msg") {
         setData((prev) => {
           return [data, ...prev];
         });
-      } else if (data.type === "login_response") {
-        window.message.error("请先修改名字");
-        navigator("/home/info");
       }
+      // } else if (data.type === "login_response") {
+      //   window.message.error("请先修改名字");
+      //   navigator("/home/info");
+      // }
     };
 
     const open = () => {
