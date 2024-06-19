@@ -97,7 +97,7 @@ export const Detail = () => {
         </Card>
 
         <div className={styles.others}>
-          <div className={styles.watch}>
+          {/* <div className={styles.watch}>
             <img src="/watch.png" alt="" />
             <span>{data.watch}</span>
             <div className={styles.after}>{data.wacthNum}</div>
@@ -107,7 +107,7 @@ export const Detail = () => {
             <img src="/likes.png" alt="" />
             <span>{data.like}</span>
             <div className={styles.after}>{data.likes}</div>
-          </div>
+          </div> */}
           <div className={styles.comment} onClick={handleOpenCommend}>
             <img src="/comment.png" alt="" />
             <span>{data.comment}</span>

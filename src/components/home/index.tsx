@@ -95,6 +95,30 @@ export const Home = () => {
           </div>
         ),
       },
+      {
+        key: "3",
+        label: (
+          <div
+            onClick={() => {
+              navigate("/home/creategenerator");
+            }}
+          >
+            创建导航
+          </div>
+        ),
+      },
+      {
+        key: "4",
+        label: (
+          <div
+            onClick={() => {
+              navigate("/home/lookgenerator");
+            }}
+          >
+            查看导航
+          </div>
+        ),
+      },
     ];
   }, [navigate]);
   return (

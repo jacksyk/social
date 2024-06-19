@@ -1,7 +1,18 @@
 // import { useState } from "react";
 import { useEffect } from "react";
 import { Navigate, useRoutes } from "react-router-dom";
-import { Login, Home, Detail, Write, PersonalInfo, SearchList, ClassifyDetail, BoilPoint } from "@/components";
+import {
+  Login,
+  Home,
+  Detail,
+  Write,
+  PersonalInfo,
+  SearchList,
+  ClassifyDetail,
+  BoilPoint,
+  CreateGenerator,
+  LookGenerator,
+} from "@/components";
 import { Content } from "@/components/home/components";
 
 const Index = () => {
@@ -45,6 +56,14 @@ const Index = () => {
         {
           path: "boiling",
           element: <BoilPoint></BoilPoint>,
+        },
+        {
+          path: "creategenerator",
+          element: <CreateGenerator></CreateGenerator>,
+        },
+        {
+          path: "lookgenerator",
+          element: <LookGenerator></LookGenerator>,
         },
       ],
     },

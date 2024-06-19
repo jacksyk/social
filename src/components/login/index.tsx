@@ -117,7 +117,18 @@ export const Login = () => {
           autoComplete="off"
         >
           <Form.Item<FieldType> label="账号" name="username" rules={[{ required: true, message: "请输入你的账号！" }]}>
-            <Input />
+            <Input
+              onChange={(value) => {
+                if (isRegister) {
+                  const inputValue = value.target.value;
+                  Kfetch(`user/verifyName/${inputValue}`).then((res) => {
+                    if (res.code === 202) {
+                      message.error("用户名已存在");
+                    }
+                  });
+                }
+              }}
+            />
           </Form.Item>
           <Form.Item<FieldType> label="密码" name="password" rules={[{ required: true, message: "请输入你的密码!" }]}>
             <Input.Password />
